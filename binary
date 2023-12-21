@@ -1,0 +1,42 @@
+//swapna
+//192321105
+#include <stdio.h>
+#include <string.h>
+int binarySearch(char arr[][50], int low, int high, char target[]) 
+{
+    while (low <= high)
+	 {
+        int mid = low + (high - low) / 2;
+        int comparison = strcmp(arr[mid], target);
+        if (comparison == 0)
+		 {
+            return mid;
+        }
+
+        if (comparison < 0)
+		 {
+            low = mid + 1;
+        }
+        
+        else 
+		{
+            high = mid - 1;
+        }
+    }
+return -1;
+}
+
+int main() 
+{
+    char sortedArray[][50] = {"apple", "banana", "cherry", "date", "grape", "kiwi", "orange"};
+    int arraySize = sizeof(sortedArray) / sizeof(sortedArray[0]);
+    char targetWord[] = "cherry";
+   int result = binarySearch(sortedArray, 0, arraySize - 1, targetWord);
+    if (result != -1)
+	 {
+        printf("%s found at index %d.\n", targetWord, result);
+     } 
+	 else 
+	
+        printf("%s not found in the array.\n", targetWord);
+}
