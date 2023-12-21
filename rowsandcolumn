@@ -43,7 +43,7 @@ int main()
         }
         printf("\nSum of all the elements in column %d is %d\n",i,csum);
     }
-    printf("\nsarshini");
-    printf("\n192321113");
+    printf("\nswapna");
+    printf("\n192321105");
     return 0;
 }
