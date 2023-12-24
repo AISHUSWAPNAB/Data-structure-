@@ -1,0 +1,146 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node*next;
+}*head,*tail,*n;
+void ins_beg(int num){
+	n=(struct node*)malloc(sizeof(struct node*));
+	n->data=num;
+	n->next=NULL;
+	if(head==NULL){
+		head=n;
+		tail=n;
+	}
+	else{
+		n->next=head;
+		head=n;
+	}
+}
+void ins_end(int num){
+	n=(struct node*)malloc(sizeof(struct node*));
+	n->data=num;
+	n->next=NULL;
+	if(head==NULL){
+		head=n;
+		tail=n;
+	}
+	else{
+		tail->next=n;
+		tail=n;
+	}
+}
+void ins_mid(int num,int mid){
+	struct node*t;
+	n=(struct node*)malloc(sizeof(struct node*));
+	n->data=num;
+	if(head==NULL){
+		head=n;
+		tail=n;
+    }
+    else{
+    	for(t=head;t!=NULL;t=t->next){
+    		if(t->data==mid){
+			   break;
+		    }
+		}
+		n->next=t->next;
+		t->next=n;
+	}
+}
+void sort(){
+	struct node*t,*s;
+	int temp;
+	temp=head->data;
+	for(t=head;t!=NULL;t=t->next){
+		for(s=t->next;s!=NULL;s=s->next){
+			if(t->data>s->data){
+				temp=t->data;
+				t->data=s->data;
+				s->data=temp;
+			}
+		}
+	}
+}
+void del_beg(){
+	struct node*t;
+	t=head;
+	head=t->next;
+	free(t);
+}
+void del_end(){
+	struct node*t,*tp;
+	t=head;
+	while(t->next!=NULL){
+	     tp=t;
+		 t=t->next;
+	}
+	tail=tp;
+	tail->next=NULL;
+	free(t);
+}
+void del_mid(int num){
+	struct node*t,*tp;
+	t=head;
+	while(t->data!=num){
+		tp=t;
+		t=t->next;
+	}
+	tp->next=t->next;
+	free(t);
+}
+void search(int s){
+	struct node*t;
+	int found=0;
+	for(t=head;t!=NULL;t=t->next){
+		if(t->data==s){
+			found=1;
+			break;
+		}
+	}
+	if(found==1){
+		printf("\nelement found\n");
+	}
+	else{
+		printf("\nelement not found\n");
+	}
+}
+void min_max(){
+	struct node*t;
+	t=head;
+	int min=t->data;
+	int max=t->data;
+	for(t=head;t!=NULL;t=t->next){
+		if(t->data>max){
+			max=t->data;
+		}
+		if(t->data<min){
+			min=t->data;
+		}
+	}
+	printf("min=%d\nmax=%d\n",min,max);
+}
+void display(){
+	struct node*t;
+	t=head;
+	while(t!=NULL){
+		printf("%d,",t->data);
+		t=t->next;
+	}
+}
+int main(){
+	ins_beg(10);
+	ins_end(20);
+	ins_mid(30,10);
+	ins_beg(1);
+	ins_end(100);
+	sort();
+	ins_mid(20,20);
+    del_beg();
+    del_end();
+    del_mid(20);
+	display();
+	search(40);
+	min_max();
+	//return 0;
+}
