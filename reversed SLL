@@ -1,0 +1,37 @@
+#include <stdio.h>
+
+// Function to reverse the digits of a number
+int reverseDigits(int num) {
+    int reversed = 0;
+    while (num > 0) {
+        int digit = num % 10;
+        reversed = reversed * 10 + digit;
+        num /= 10;
+    }
+    return reversed;
+}
+
+// Function to calculate the sum of digits of a number
+int sumOfDigits(int num) {
+    int sum = 0;
+    while (num > 0) {
+        int digit = num % 10;
+        sum += digit;
+        num /= 10;
+    }
+    return sum;
+}
+
+int main() {
+    int num;
+    printf("Enter an integer: ");
+    scanf("%d", &num);
+
+    int reversed = reverseDigits(num);
+    int sum = sumOfDigits(num);
+
+    printf("Reversed number: %d\n", reversed);
+    printf("Sum of digits: %d\n", sum);
+
+    return 0;
+}
