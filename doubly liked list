@@ -1,0 +1,178 @@
+//swapna
+//192321105
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node*next,*prev;
+}*head,*tail,*n;
+void ins_beg(int num){
+	n=(struct node*)malloc(sizeof(struct node));
+	n->data=num;
+	n->next=NULL;
+	n->prev=NULL;
+	if(head==NULL){
+		head=n;
+		tail=n;
+	}
+	else{
+		n->next=head;
+		head->prev=n;
+		head=n;
+	}
+}
+void ins_end(int num){
+	n=(struct node*)malloc(sizeof(struct node));
+	n->data=num;
+	n->next=NULL;
+	n->prev=NULL;
+	if(head==NULL){
+		head=n;
+		tail=n;
+	}
+	else{
+		n->prev=tail;
+		tail->next=n;
+		tail=n;
+	}
+}
+void ins_mid(int num,int mid){
+	struct node*t;
+	n=(struct node*)malloc(sizeof(struct node));
+	n->data=num;
+	n->next=NULL;
+	n->prev=NULL;
+	if(head==NULL){
+		head=n;
+		tail=n;
+	}
+	else{
+		for(t=head;t!=NULL;t=t->next){
+			if(t->data==mid){
+				break;
+			}
+		}
+		n->prev=t;
+		n->next=t->next;
+		t->next->prev=n;
+		t->next=n;
+	}
+}
+void del_beg(){
+	struct node*t;
+	t=head;
+	t->next->prev=NULL;
+	head=t->next;
+}
+void del_end(){
+	struct node*t;
+	t=tail;
+	t->prev->next=NULL;
+	tail=t->prev;
+}
+void del_mid(int mid){
+	struct node*t;
+	t=head;
+	for(t=head;t!=NULL;t=t->next){
+		if(t->data==mid){
+			break;
+		}
+	}
+	t->next->prev=t->prev;
+	t->prev->next=t->next;
+	free(t);
+}
+void sort(char a){
+	struct node*t,*tp;
+	int temp=0;
+	if(a=='a'){
+		printf("\nafter sorting in ascending order:\n");
+		for(t=head;t!=NULL;t=t->next){
+			for(tp=t->next;tp!=NULL;tp=tp->next){
+				if(t->data>tp->data){
+					temp=t->data;
+					t->data=tp->data;
+					tp->data=temp;
+				}
+			}
+		}
+		t=head;
+	    while(t!=NULL){
+		printf("%d,",t->data);
+		t=t->next;
+	    }
+	}
+	else{
+		printf("\nafter sorting in descending order:\n");
+		for(t=head;t!=NULL;t=t->next){
+			for(tp=t->next;tp!=NULL;tp=tp->next){
+				if(t->data<tp->data){
+					temp=t->data;
+					t->data=tp->data;
+					tp->data=temp;
+				}
+			}
+		}
+		t=head;
+	    while(t!=NULL){
+		printf("%d,",t->data);
+		t=t->next;
+	    }
+	}
+}
+void search(int num){
+	struct node*t;
+	int found=0;
+	for(t=head;t!=NULL;t=t->next){
+		if(t->data==num){
+			found=1;
+			break;
+		}
+	}
+	if(found==1){
+		printf("\n'%d'found",num);
+	}
+	else{
+		printf("\n'%d' not found",num);
+	}
+}
+void min_max(){
+	struct node*t;
+	int min,max;
+	min=head->data;
+	max=head->data;
+	for(t=head;t!=NULL;t=t->next){
+		if(t->data>max){
+			max=t->data;
+		}
+		if(t->data<min){
+			min=t->data;
+		}
+	}
+	printf("\nmin=%d\nmax=%d",min,max);
+}
+void display(){
+	struct node*t;
+	t=head;
+	while(t!=NULL){
+		printf("%d,",t->data);
+		t=t->next;
+	}
+}
+int main(){
+	ins_beg(10);
+	ins_end(30);
+	ins_mid(20,10);
+	ins_beg(1);
+	ins_end(100);
+	ins_mid(20,10);
+	del_beg();
+	del_end();
+    del_mid(20);
+	display();
+	sort('d');
+	search(20);
+	search(7);
+	min_max();
+}
