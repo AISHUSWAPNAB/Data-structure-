@@ -1,0 +1,206 @@
+
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node* next;
+};
+void insertAtBeginning(struct Node** head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    if (*head == NULL) {
+        *head = newNode;
+        newNode->next = *head;
+    }
+    else {
+        struct Node* last = *head;
+        while (last->next != *head)
+            last = last->next;
+        newNode->next = *head;
+        last->next = newNode;
+        *head = newNode;
+    }
+}
+void insertAtEnd(struct Node** head, int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    if (*head == NULL) {
+        *head = newNode;
+        newNode->next = *head;
+    }
+    else {
+        struct Node* last = *head;
+        while (last->next != *head)
+            last = last->next;
+        last->next = newNode;
+        newNode->next = *head;
+    }
+}
+void insertAtPosition(struct Node** head, int value, int position) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    if (*head == NULL || position == 0) {
+        insertAtBeginning(head, value);
+        return;
+    }
+    struct Node* current = *head;
+    int count = 0;
+    while (count < position - 1 && current->next != *head) {
+        current = current->next;
+        count++;
+    }
+    newNode->next = current->next;
+    current->next = newNode;
+}
+void deleteFromBeginning(struct Node** head) {
+    if (*head == NULL)
+        return;
+    struct Node* last = *head;
+    while (last->next != *head)
+        last = last->next;
+    if (*head == last) {
+        free(*head);
+        *head = NULL;
+    }
+    else {
+        struct Node* temp = *head;
+        *head = (*head)->next;
+        last->next = *head;
+        free(temp);
+    }
+}
+void deleteFromEnd(struct Node** head) {
+    if (*head == NULL)
+        return;
+    struct Node* secondLast = *head;
+    while (secondLast->next->next != *head)
+        secondLast = secondLast->next;
+    if (secondLast == *head) {
+        free(*head);
+        *head = NULL;
+    }
+    else {
+        struct Node* last = secondLast->next;
+        secondLast->next = *head;
+        free(last);
+    }
+}
+void deleteFromPosition(struct Node** head, int position) {
+    if (*head == NULL)
+        return;
+    if (position == 0) {
+        deleteFromBeginning(head);
+        return;
+    }
+    struct Node* current = *head;
+    struct Node* previous = NULL;
+    int count = 0;
+    while (count < position && current->next != *head) {
+        previous = current;
+        current = current->next;
+        count++;
+    }
+    if (current == *head && count < position)
+        return;
+    previous->next = current->next;
+    free(current);
+}
+void display(struct Node* head) {
+    if (head == NULL)
+        return;
+    struct Node* current = head;
+    do {
+        printf("%d ", current->data);
+        current = current->next;
+    } while (current != head);
+    printf("\n");
+}
+int search(struct Node* head, int value) {
+    if (head == NULL)
+        return -1;
+    struct Node* current = head;
+    int position = 0;
+    do {
+        if (current->data == value)
+            return position;
+        current = current->next;
+        position++;
+    } while (current != head);
+    return -1;
+}
+void sort(struct Node** head) {
+    if (*head == NULL || (*head)->next == *head)
+        return;
+    struct Node* current;
+    struct Node* next;
+    int temp;
+    int swapped;
+    do {
+        swapped = 0;
+        current = *head;
+        while (current->next != *head) {
+            next = current->next;
+            if (current->data > next->data) {
+                temp = current->data;
+                current->data = next->data;
+                next->data = temp;
+                swapped = 1;
+            }
+            current = current->next;
+        }
+    } while (swapped);
+}
+int findMax(struct Node* head) {
+    if (head == NULL)
+        return -1;
+    int max = head->data;
+    struct Node* current = head->next;
+    while (current != head) {
+        if (current->data > max)
+            max = current->data;
+        current = current->next;
+    }
+    return max;
+}
+int findMin(struct Node* head) {
+    if (head == NULL)
+        return -1;
+		    int min = head->data;
+    struct Node* current = head->next;
+    while (current != head) {
+        if (current->data < min)
+            min = current->data;
+        current = current->next;
+    }
+    return min;
+}
+int main() {
+    struct Node* head = NULL;
+    insertAtBeginning(&head, 10);
+    insertAtEnd(&head, 20);
+    insertAtPosition(&head, 30, 1);
+    printf("\nname:swapna");
+    printf("\nreg no:192321105");
+    printf("\nList: ");
+    display(head);
+    int searchValue = 20;
+    int position = search(head, searchValue);
+    if (position != -1)
+        printf("%d found at position %d\n", searchValue, position);
+    else
+        printf("%d not found in the list\n", searchValue);
+    sort(&head);
+    printf("Sorted List: ");
+    display(head);
+    int max = findMax(head);
+    int min = findMin(head);
+    printf("Maximum value: %d\n", max);
+    printf("Minimum value: %d\n", min);
+    deleteFromBeginning(&head);
+    deleteFromPosition(&head, 1);
+    deleteFromEnd(&head);
+    printf("List after deletion: ");
+    display(head);
+    return 0;
+
+	}
