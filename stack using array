@@ -1,0 +1,64 @@
+//swapna
+//192321105
+#include <stdio.h>
+#include <stdlib.h>
+int size=5;
+int a[5];
+int top=-1;
+int isempty(){
+	if(top==-1){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+int isfull(){
+	if(top==size-1){
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+void push(int num){
+	if(isfull()){
+		printf("\noverflow");
+	}
+	else{
+		top=top+1;
+		a[top]=num;
+	}
+}
+void pop(){
+	if(isempty()){
+		printf("\nunderflow");
+	}
+	else{
+		printf("\n%d is deleted",a[top]);
+		top=top-1;
+	}
+}
+void peek(){
+	printf("\n%d is peek element",a[top]);
+}
+void display(){
+	if(isempty()){
+		printf("\nstack is empty");
+	}
+	else{
+		int i;
+		printf("\n");
+		for(i=0;i<=top;i++){
+			printf("%d,",a[i]);
+		}
+	}
+}
+int main(){
+	push(10);
+	push(20);
+	push(30);
+	display();
+	pop();
+	peek();
+}
