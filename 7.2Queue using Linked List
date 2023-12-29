@@ -1,0 +1,65 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node{
+	int data;
+	struct node*next;
+}*rear,*front,*n;
+void enqueue(int num){
+	n=(struct node*)malloc(sizeof(struct node));
+	n->data=num;
+	n->next=NULL;
+	if(front==NULL){
+		front=n;
+		rear=n;
+	}
+	else{
+		rear->next=n;
+		rear=n;
+	}
+}
+void dequeue(){
+	if(front==NULL){
+		printf("under flow\n");
+	}
+	else{
+		struct node*t;
+		t=front;
+		front=t->next;
+		printf("%d deleted\n",t->data);
+		free(t);
+	}
+}
+void display(){
+	if(front==NULL){
+		printf("queue is empty\n");
+	}
+	else{
+		struct node*t;
+		t=front;
+		while(t!=NULL){
+			printf("%d,",t->data);
+			t=t->next;
+		}
+		printf("\n");
+	}
+}
+void peek(){
+	if(front==NULL){
+		printf("queue is empty\n");
+	}
+	else{
+		printf("front: %d\nrear: %d\n",front->data,rear->data);
+	}	
+}
+int main(){
+	printf("\nswapna");
+	printf("\n192321105");
+    enqueue(10);
+    enqueue(20);
+    enqueue(30);
+    enqueue(40);
+    enqueue(50);
+    dequeue();
+	display();
+	peek();
+}
