@@ -1,0 +1,130 @@
+//swapna
+//192321105
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {													//Node
+    int data;
+    struct Node* left;
+    struct Node* right;
+    int height;
+};
+int getHeight(struct Node* node) {										//getHeight
+    if (node == NULL)
+        return 0;
+    return node->height;
+}
+int max(int a, int b) {														//max
+    return (a > b) ? a : b;
+}
+struct Node* createNode(int data) {													//createNode
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->left = NULL;
+    newNode->right = NULL;
+    newNode->height = 1;
+    return newNode;
+}
+struct Node* rightRotate(struct Node* y) {									//rightRotate
+    struct Node* x = y->left;
+    struct Node* T2 = x->right;
+    x->right = y;
+    y->left = T2;
+    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
+    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
+    return x;
+}
+struct Node* leftRotate(struct Node* x) {										//leftRotate
+    struct Node* y = x->right;
+    struct Node* T2 = y->left;
+    y->left = x;
+    x->right = T2;
+    x->height = max(getHeight(x->left), getHeight(x->right)) + 1;
+    y->height = max(getHeight(y->left), getHeight(y->right)) + 1;
+    return y;
+}
+int getBalanceFactor(struct Node* node) {									//getBalanceFactor
+    if (node == NULL)
+        return 0;
+    return getHeight(node->left) - getHeight(node->right);
+}
+struct Node* insertNode(struct Node* node, int data) {      				//insertNode
+    if (node == NULL)
+        return createNode(data);
+
+    if (data < node->data)
+        node->left = insertNode(node->left, data);
+    else if (data > node->data)
+        node->right = insertNode(node->right, data);
+    else
+        return node;
+    node->height = 1 + max(getHeight(node->left), getHeight(node->right));
+    //printf("%df %ds ",getHeight(node->left), getHeight(node->right));
+    int balanceFactor = getBalanceFactor(node);
+    if (balanceFactor > 1 && data < node->left->data)
+        return rightRotate(node);
+    if (balanceFactor < -1 && data > node->right->data)
+        return leftRotate(node);
+    if (balanceFactor > 1 && data > node->left->data) {
+        node->left = leftRotate(node->left);
+        return rightRotate(node);
+    }
+    if (balanceFactor < -1 && data < node->right->data) {
+        node->right = rightRotate(node->right);
+        return leftRotate(node);
+    }
+    return node;
+}
+void printTree(struct Node* root, int space) {								// printTree
+    if (root == NULL) {
+        return;
+    }
+    space += 4;
+    printTree(root->right, space);
+    for (int i = 4; i < space; i++) {
+        printf(" ");
+    }
+    printf("%d\n", root->data);
+    printTree(root->left, space);
+}
+int main() {
+    struct Node* root = NULL;
+    root = insertNode(root, 1);
+    printTree(root,0);
+    printf("---------------\n");
+    root = insertNode(root, 2);
+    printTree(root,0);
+    printf("---------------\n");
+    root = insertNode(root, 3);
+    printTree(root,0);
+    printf("---------------\n");
+    root = insertNode(root, 4);
+    printTree(root,0);
+    printf("---------------\n");
+    root = insertNode(root, 5);
+    printTree(root,0);
+    printf("---------------\n");
+    root = insertNode(root, 6);
+    printTree(root,0);
+    printf("---------------\n");
+    root = insertNode(root, 7);
+    printTree(root,0);
+    printf("---------------\n");
+    root = insertNode(root, 16);
+    printTree(root,0);
+    printf("---------------\n");
+    root = insertNode(root, 15);
+    printTree(root,0);
+    printf("---------------");
+   root = insertNode(root, 14);
+   printTree(root,0);
+   printf("---------------\n");
+    root = insertNode(root, 13);
+    printTree(root,0);
+    printf("---------------\n");
+    root = insertNode(root, 12);
+    printTree(root,0);
+    printf("---------------\n");
+    printf("\nTraversal of the AVL tree: \n");
+    printTree(root,0);
+    return 0;
+}
