@@ -1,0 +1,69 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct HashTable {
+    int size;
+    struct Node** table;
+};
+struct Node* createNode(int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    return newNode;
+}
+struct HashTable* createHashTable(int size) {
+	int i;
+    struct HashTable* hashTable = (struct HashTable*)malloc(sizeof(struct HashTable));
+    hashTable->size = size;
+    hashTable->table= (struct Node**)malloc(size * sizeof(struct Node));
+    for (i = 0; i < size; i++) {
+        hashTable->table[i] = NULL;
+    }
+    return hashTable;
+}
+int hashFunction(int key, int size) {
+    return key % size;
+}
+void insert(struct HashTable* hashTable, int data) {
+    int index = hashFunction(data, hashTable->size);
+    struct Node* newNode = createNode(data);
+    if (hashTable->table[index] == NULL) {
+        hashTable->table[index] = newNode;
+    } else {
+        struct Node* temp = hashTable->table[index];
+        while (temp->next != NULL) {
+            temp = temp->next;
+        }
+        temp->next = newNode;
+    }
+}
+void display(struct HashTable* hashTable) {
+	int i;
+    for (i = 0; i < hashTable->size; i++) {
+        printf("Index %d: ", i);
+        struct Node* temp = hashTable->table[i];
+        while (temp != NULL) {
+            printf("%d -> ", temp->data);
+            temp = temp->next;
+        }
+        printf("NULL\n");
+    }
+}
+int main() 
+{
+	printf("192321105\n");
+    struct HashTable* hashTable = createHashTable(8);
+    insert(hashTable,36);
+    insert(hashTable,18);
+    insert(hashTable,72);
+    insert(hashTable,43);
+    insert(hashTable,6);
+    insert(hashTable,10);
+    insert(hashTable,5);
+    insert(hashTable,15);
+    display(hashTable);
+    return 0;
+}
