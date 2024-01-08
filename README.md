@@ -133,5 +133,12 @@ Day 10
 - 10.2. Implement a C Program for Splay tree tree and perform Insertion and Deletion of Nodes.
 
 Day 11
+
 - 11.1. Implement a C Program for B Tree and perform Insertion of Nodes
 - 11.2. Implement a C Program for TRIE Tree and perform Insertion  of Nodes
+
+Day 12
+
+- 1. Implement a C Program to perform Hashing with all collision resolving techniques
+- 2. Implement a C Program for Min Heap and Max Heap and perform Insertion  of Nodes
+- 3.  Implement a C Program to perform Heap sort both ascending and Descending order
