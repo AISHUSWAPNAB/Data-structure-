@@ -139,6 +139,6 @@ Day 11
 
 Day 12
 
-- 1. Implement a C Program to perform Hashing with all collision resolving techniques
-- 2. Implement a C Program for Min Heap and Max Heap and perform Insertion  of Nodes
-- 3.  Implement a C Program to perform Heap sort both ascending and Descending order
+- 12.1. Implement a C Program to perform Hashing with all collision resolving techniques
+- 12.2. Implement a C Program for Min Heap and Max Heap and perform Insertion  of Nodes
+- 12.3. Implement a C Program to perform Heap sort both ascending and Descending order
