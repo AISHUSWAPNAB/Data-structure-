@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define ALPHABET_SIZE 26
+struct TrieNode {
+    struct TrieNode* children[ALPHABET_SIZE];
+    int isEndOfWord;
+};
+struct TrieNode* createNode() {
+	int i;
+    struct TrieNode* newNode = (struct TrieNode*)malloc(sizeof(struct TrieNode));
+    newNode->isEndOfWord = 0;
+    for (i = 0; i < ALPHABET_SIZE; i++) {
+        newNode->children[i] = NULL;
+    }
+    return newNode;
+}
+void insert(struct TrieNode* root, char* word) {
+	int i;
+    struct TrieNode* currentNode = root;
+    for (i = 0; word[i] != '\0'; i++) {
+        int index = word[i] - 'a';
+        if (currentNode->children[index] == NULL) {
+            currentNode->children[index] = createNode();
+        }
+        currentNode = currentNode->children[index];
+    }
+    currentNode->isEndOfWord = 1;
+}
+void display(struct TrieNode* root, char* word, int level) {
+	int i;
+    if (root->isEndOfWord) {
+        word[level] = '\0';
+        printf("%s\n", word);
+    }
+    for (i = 0; i < ALPHABET_SIZE; i++) {
+        if (root->children[i] != NULL) {
+            word[level] = i + 'a';
+            display(root->children[i], word, level + 1);
+        }
+    }
+}
+int main() {
+	printf("192321105\n");
+    struct TrieNode* root = createNode();
+    insert(root, "hello");
+    insert(root, "world");
+    insert(root, "programming");
+    insert(root, "code");
+    char word[100];
+    display(root, word, 0);
+    return 0;
+}
