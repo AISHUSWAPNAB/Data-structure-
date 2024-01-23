@@ -171,5 +171,5 @@ Day 17
  - 17.2. Implement a C Program to find MST shortest path for the given unweighted directed graph using Dijkstra's Algorithm
 
 Day 18
--18.1. Implement a C Program to find BFS for the given graph
--18.2. Implement a C Program to find DFS for the given graph
+- 18.1. Implement a C Program to find BFS for the given graph
+- 18.2. Implement a C Program to find DFS for the given graph
